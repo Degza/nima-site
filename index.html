@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="description" content="نیما عمرپور | در چرخه طبیعت، من کی باشم." />
+  <title>نیما | Nima</title>
+
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+
+  <style>
+    :root {
+      --bg: #050d18;
+      --glass: rgba(255, 255, 255, 0.06);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-hover: rgba(255, 255, 255, 0.1);
+      --text: #eef3f8;
+      --muted: #8fa3b8;
+      --gold: #d4a84b;
+      --gold-soft: rgba(212, 168, 75, 0.7);
+      --blur: 22px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Vazirmatn, system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: 
+        radial-gradient(ellipse 90% 60% at 70% 10%, rgba(30, 70, 130, 0.25), transparent 60%),
+        radial-gradient(ellipse 70% 50% at 20% 80%, rgba(20, 40, 90, 0.3), transparent 50%),
+        radial-gradient(ellipse 50% 40% at 50% 50%, rgba(15, 30, 60, 0.2), transparent);
+      pointer-events: none;
+    }
+
+    .nav {
+      position: fixed;
+      top: 1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.45rem 0.6rem;
+      background: rgba(10, 20, 40, 0.55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border);
+      border-radius: 100px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 100px;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav a:hover, .nav a.active {
+      color: var(--text);
+      background: rgba(255,255,255,0.08);
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--text);
+      padding: 0.55rem 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .hero {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 1.5rem 4rem;
+    }
+
+    .hero-inner {
+      max-width: 820px;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: heroIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    }
+
+    .hero-label {
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      color: var(--gold-soft);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fade 1s ease 0.8s forwards;
+    }
+
+    .hero-name {
+      font-size: clamp(3.8rem, 14vw, 7.5rem);
+      font-weight: 800;
+      letter-spacing: -3px;
+      line-height: 0.95;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(180deg, #fff 40%, rgba(255,255,255,0.55));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-quote {
+      font-size: clamp(1.15rem, 3.2vw, 1.55rem);
+      color: var(--muted);
+      font-weight: 400;
+      max-width: 480px;
+      margin: 0 auto 2.8rem;
+      line-height: 1.9;
+      opacity: 0;
+      animation: fade 1.2s ease 1.1s forwards;
+    }
+
+    .hero-quote span { color: var(--gold); }
+
+    .glass-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 1.9rem;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 100px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .glass-btn:hover {
+      transform: translateY(-3px);
+      border-color: rgba(212, 168, 75, 0.4);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(212, 168, 75, 0.15), inset 0 1px 0 rgba(255,255,255,0.2);
+      color: #fff;
+    }
+
+    .glass-btn:hover::before { opacity: 1; }
+
+    .section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .section-header.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-num {
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.2rem;
+    }
+
+    .card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 1.8rem;
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(40px) scale(0.97);
+      transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .card:hover {
+      background: var(--glass-hover);
+      border-color: rgba(255,255,255,0.2);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    }
+
+    .card-lg { grid-column: span 7; }
+    .card-md { grid-column: span 5; }
+    .card-full { grid-column: span 12; }
+
+    .card-label {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .card-title {
+      font-size: 1.45rem;
+      font-weight: 650;
+      margin-bottom: 0.7rem;
+      letter-spacing: -0.3px;
+    }
+
+    .card-text {
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.85;
+    }
+
+    .card-arrow {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover .card-arrow {
+      background: rgba(212, 168, 75, 0.2);
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateX(-4px);
+    }
+
+    .quote-block {
+      margin: 2rem 0 5rem;
+      padding: 2.5rem 2rem;
+      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-block::before {
+      content: "“";
+      position: absolute;
+      top: -0.5rem;
+      right: 1.5rem;
+      font-size: 7rem;
+      color: rgba(212, 168, 75, 0.12);
+      font-family: serif;
+      line-height: 1;
+    }
+
+    .quote-text {
+      font-size: clamp(1.15rem, 3vw, 1.45rem);
+      color: var(--text);
+      line-height: 2;
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .soft-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .soft-item {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      padding: 1rem 1.2rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .soft-item:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .soft-num {
+      font-size: 0.8rem;
+      color: var(--gold);
+      width: 24px;
+      opacity: 0.7;
+    }
+
+    .soft-name { font-weight: 550; font-size: 1.05rem; }
+    .soft-sub { font-size: 0.85rem; color: var(--muted); margin-top: 0.15rem; }
+
+    footer {
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(143, 163, 184, 0.6);
+    }
+
+    @keyframes heroIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade {
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 900px) {
+      .card-lg, .card-md { grid-column: span 12; }
+      .bento { gap: 1rem; }
+    }
+
+    @media (max-width: 640px) {
+      .nav { top: 0.8rem; padding: 0.35rem 0.5rem; gap: 0; }
+      .nav a { padding: 0.45rem 0.75rem; font-size: 0.8rem; }
+      .nav-logo { padding: 0.45rem 0.9rem; letter-spacing: 2px; }
+      .hero-name { letter-spacing: -2px; }
+      .section { padding: 3.5rem 1.2rem; }
+      .card { padding: 1.5rem; border-radius: 20px; }
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(212, 168, 75, 0.3); border-radius: 3px; }
+
+    /* لودینگ */
+    .loading {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: opacity 0.4s ease;
+    }
+    .loading.hide { opacity: 0; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <div class="loading" id="loading">در حال لود...</div>
+  <div class="bg-glow"></div>
+
+  <nav class="nav">
+    <div class="nav-logo">NIMA</div>
+    <a href="#me">من</a>
+    <a href="#words">حرف‌ها</a>
+    <a href="#sound">صدا</a>
+    <a href="#read">خوندن</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-label" id="hero-label"></div>
+      <h1 class="hero-name" id="hero-name"></h1>
+      <p class="hero-quote" id="hero-quote"></p>
+      <a href="#me" class="glass-btn">
+        کمی پایین‌تر
+        <span style="font-size: 1.1rem;">↓</span>
+      </a>
+    </div>
+  </header>
+
+  <section class="section" id="me">
+    <div class="section-header">
+      <div class="section-num">۰۱ — من</div>
+      <h2 class="section-title" id="about-title"></h2>
+    </div>
+    <div class="bento" id="about-cards"></div>
+  </section>
+
+  <div class="section" style="padding-top: 0; padding-bottom: 2rem;">
+    <div class="quote-block card">
+      <p class="quote-text" id="quote-text"></p>
+    </div>
+  </div>
+
+  <section class="section" id="words">
+    <div class="section-header">
+      <div class="section-num">۰۲ — حرف‌ها</div>
+      <h2 class="section-title" id="thoughts-title"></h2>
+    </div>
+    <div class="bento">
+      <div class="card card-full">
+        <div class="card-label">یادداشت</div>
+        <div class="card-title" id="thoughts-card-title"></div>
+        <p class="card-text" id="thoughts-text" style="max-width: 680px;"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sound">
+    <div class="section-header">
+      <div class="section-num">۰۳ — صدا</div>
+      <h2 class="section-title" id="music-title"></h2>
+    </div>
+    <div class="bento">
+      <div class="card card-md">
+        <div class="card-label">فضا</div>
+        <div class="card-title" id="music-intro-title"></div>
+        <p class="card-text" id="music-intro-text"></p>
+      </div>
+      <div class="card card-lg">
+        <div class="card-label">اسم‌ها</div>
+        <div class="soft-list" id="music-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="read">
+    <div class="section-header">
+      <div class="section-num">۰۴ — خوندن</div>
+      <h2 class="section-title" id="books-title"></h2>
+    </div>
+    <div class="bento">
+      <div class="card card-lg">
+        <div class="card-label">کتاب‌ها</div>
+        <div class="soft-list" id="books-list"></div>
+      </div>
+      <div class="card card-md">
+        <div class="card-label">یادداشت</div>
+        <div class="card-title" id="books-side-title"></div>
+        <p class="card-text" id="books-side-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">اینستاگرام</a>
+      <a href="#">تلگرام</a>
+      <a href="#">ایمیل</a>
+    </div>
+    <p class="footer-copy" id="footer-text"></p>
+  </footer>
+
+  <script>
+    // لود کردن محتوا از JSON
+    async function loadContent() {
+      try {
+        const res = await fetch('./data/site.json');
+        const data = await res.json();
+
+        // هیرو
+        document.getElementById('hero-label').textContent = data.hero.label;
+        document.getElementById('hero-name').textContent = data.hero.name;
+        document.getElementById('hero-quote').innerHTML = data.hero.quote.replace('من کی باشم', '<span>من کی باشم</span>');
+
+        // درباره من
+        document.getElementById('about-title').textContent = data.about.sectionTitle;
+        const aboutContainer = document.getElementById('about-cards');
+        aboutContainer.innerHTML = data.about.cards.map((card, i) => `
+          <div class="card ${i === 0 ? 'card-lg' : 'card-md'}">
+            <div class="card-label">${card.label}</div>
+            <div class="card-title">${card.title}</div>
+            <p class="card-text">${card.text}</p>
+            ${i === 0 ? '<div class="card-arrow">←</div>' : ''}
+          </div>
+        `).join('');
+
+        // نقل قول
+        document.getElementById('quote-text').innerHTML = data.quote.text.replace('. ', '.<br>');
+
+        // افکار
+        document.getElementById('thoughts-title').textContent = data.thoughts.sectionTitle;
+        document.getElementById('thoughts-card-title').textContent = data.thoughts.title;
+        document.getElementById('thoughts-text').textContent = data.thoughts.text;
+
+        // موسیقی
+        document.getElementById('music-title').textContent = data.music.sectionTitle;
+        document.getElementById('music-intro-title').textContent = data.music.introTitle;
+        document.getElementById('music-intro-text').textContent = data.music.introText;
+        document.getElementById('music-list').innerHTML = data.music.items.map((item, i) => `
+          <div class="soft-item">
+            <div class="soft-num">۰${i + 1}</div>
+            <div>
+              <div class="soft-name">${item.name}</div>
+              <div class="soft-sub">${item.note}</div>
+            </div>
+          </div>
+        `).join('');
+
+        // کتاب‌ها
+        document.getElementById('books-title').textContent = data.books.sectionTitle;
+        document.getElementById('books-side-title').textContent = data.books.sideTitle;
+        document.getElementById('books-side-text').textContent = data.books.sideText;
+        document.getElementById('books-list').innerHTML = data.books.items.map(item => `
+          <div class="soft-item">
+            <div class="soft-num">—</div>
+            <div>
+              <div class="soft-name">${item.name}</div>
+              <div class="soft-sub">${item.note}</div>
+            </div>
+          </div>
+        `).join('');
+
+        // فوتر
+        document.getElementById('footer-text').textContent = data.footer.text;
+
+        // انیمیشن‌ها رو دوباره وصل کن
+        initAnimations();
+
+        // لودینگ رو بردار
+        document.getElementById('loading').classList.add('hide');
+      } catch (err) {
+        console.error('خطا در لود محتوا:', err);
+        document.getElementById('loading').textContent = 'خطا در لود محتوا';
+      }
+    }
+
+    function initAnimations() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('.card, .section-header, .quote-block').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // اکتیو کردن لینک ناوبری
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 120;
+        if (scrollY >= top) current = section.getAttribute('id');
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
+    });
+
+    loadContent();
+  </script>
+</body>
+</html>
